@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name         哔咪脚本
 // @namespace    http://tampermonkey.net/
-// @version      0.1
+// @version      0.2
 // @description  阿巴阿巴
 // @author       KyuubiRan
-// @include      /https?:\/\/www\.bimiacg\.net\/?/
+// @include      /https?:\/\/(www\.)?bimiacg2?\.net\/?/
 // @icon         https://www.google.com/s2/favicons?domain=bimiacg.net
 // @grant        none
 // ==/UserScript==
@@ -22,10 +22,10 @@ const AUTO_LIKE_DELAY = 60
 //每轮点赞次数
 const AUTO_LIKE_TIMES = 25
 
-const REG_HOME = /^https?:\/\/www\.bimiacg\.net\/?$/
-const REG_TYPE = /https?:\/\/www\.bimiacg\.net\/type\/?/
-const REG_BANGUMI = /https?:\/\/www\.bimiacg\.net\/bangumi\/bi\/\d+\/?/
-const REG_PLAY = /https?:\/\/www\.bimiacg\.net\/bangumi\/\d+\/play\/\d+\/\d+\/?/
+const REG_HOME = /^https?:\/\/(www\.)?bimiacg2?\.net\/?$/
+const REG_TYPE = /https?:\/\/(www\.)?bimiacg2?\.net\/type\/?/
+const REG_BANGUMI = /https?:\/\/(www\.)?bimiacg2?\.net\/bangumi\/bi\/\d+\/?/
+const REG_PLAY = /https?:\/\/(www\.)?bimiacg2?\.net\/bangumi\/\d+\/play\/\d+\/\d+\/?/
 
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms))
@@ -42,7 +42,7 @@ const AD_ELEM_LIST = ["hbidbox", "HMRichBox", "HMcoupletDivleft", "HMcoupletDivr
 async function removeAd() {
     if (!REMOVE_AD) return
     let tuiguangElems = document.getElementsByClassName("tuiguang")
-    while (tuiguangElems.length != 0) removeElem(tuiguangElems[0])
+    while (tuiguangElems.length !== 0) removeElem(tuiguangElems[0])
     let observer = new MutationObserver(_ => {
         AD_ELEM_LIST.forEach(s => {
             removeElem(document.getElementById(s))
