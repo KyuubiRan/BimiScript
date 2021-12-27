@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name         哔咪脚本
 // @namespace    http://tampermonkey.net/
-// @version      0.2
+// @version      0.23
 // @description  阿巴阿巴
 // @author       KyuubiRan
-// @include      /https?:\/\/(www\.)?bimiacg2?\.net\/?/
+// @include      /https?:\/\/(www\.)?bimiacg[0-9]?\.net\/?/
 // @icon         https://www.google.com/s2/favicons?domain=bimiacg.net
 // @grant        none
 // ==/UserScript==
