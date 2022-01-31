@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         哔咪脚本
 // @namespace    http://tampermonkey.net/
-// @version      0.3
+// @version      0.4
 // @description  阿巴阿巴
 // @author       KyuubiRan
 // @include      /https?:\/\/(www\.)?bimiacg[0-9]?\.net\/?/
@@ -22,10 +22,10 @@ const AUTO_LIKE_DELAY = 60
 //每轮点赞次数
 const AUTO_LIKE_TIMES = 25
 
-const REG_HOME = /^https?:\/\/(www\.)?bimiacg2?\.net\/?$/
-const REG_TYPE = /https?:\/\/(www\.)?bimiacg2?\.net\/type\/?/
-const REG_BANGUMI = /https?:\/\/(www\.)?bimiacg2?\.net\/bangumi\/bi\/\d+\/?/
-const REG_PLAY = /https?:\/\/(www\.)?bimiacg2?\.net\/bangumi\/\d+\/play\/\d+\/\d+\/?/
+const REG_HOME = /^https?:\/\/(www\.)?bimiacg[0-9]?\.net\/?$/
+const REG_TYPE = /https?:\/\/(www\.)?bimiacg[0-9]?\.net\/type\/?/
+const REG_BANGUMI = /https?:\/\/(www\.)?bimiacg[0-9]?\.net\/bangumi\/bi\/\d+\/?/
+const REG_PLAY = /https?:\/\/(www\.)?bimiacg[0-9]?\.net\/bangumi\/\d+\/play\/\d+\/\d+\/?/
 
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms))
@@ -40,10 +40,10 @@ async function removeElem(elem) {
 const AD_ELEM_LIST = ["hbidbox", "HMRichBox", "HMcoupletDivleft", "HMcoupletDivright"]
 
 async function removeAd() {
-    if (!REMOVE_AD) return
     let tuiguangElems = document.getElementsByClassName("tuiguang")
     while (tuiguangElems.length !== 0) removeElem(tuiguangElems[0])
     let observer = new MutationObserver(_ => {
+        removeElem(document.querySelector("#bkcl"))
         AD_ELEM_LIST.forEach(s => {
             removeElem(document.getElementById(s))
         })
@@ -84,7 +84,7 @@ async function autoLike() {
 }
 
 (async function start() {
-    removeAd()
+    if (REMOVE_AD) removeAd()
     if (REG_BANGUMI.test(document.URL)) autoJump()
     if (REG_PLAY.test(document.URL)) autoLike()
 })()
